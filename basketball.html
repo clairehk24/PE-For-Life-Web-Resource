@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Applications and Concepts of Basketball | PE for Life</title>
+
+    <style>
+      :root {
+        --surface: #f4f1de;
+        --card: #ffffff;
+        --heading: #1f2f30;
+        --text: #2f3e3f;
+        --muted: rgba(31, 47, 48, 0.75);
+        --accent: #e07a5f;
+        --border: rgba(31, 47, 48, 0.14);
+        --radius: 14px;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--font);
+        background: var(--surface);
+        color: var(--text);
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 48px 40px;
+      }
+
+      h1 {
+        margin: 0 0 10px;
+        font-size: 36px;
+        color: var(--heading);
+      }
+
+      .subtitle {
+        font-size: 16px;
+        margin: 0 0 18px;
+        opacity: 0.85;
+      }
+
+      /* ===== Top-level Tabs (Advanced/Beginner) ===== */
+      .top-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 18px 0 26px;
+      }
+
+      .top-tab {
+        appearance: none;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.65);
+        color: var(--heading);
+        padding: 10px 14px;
+        border-radius: 999px;
+        font-weight: 800;
+        cursor: pointer;
+        line-height: 1;
+        transition:
+          background 0.15s ease,
+          transform 0.15s ease,
+          border-color 0.15s ease,
+          color 0.15s ease;
+      }
+
+      .top-tab:hover {
+        background: #ffffff;
+        transform: translateY(-1px);
+        border-color: rgba(31, 47, 48, 0.22);
+      }
+
+      .top-tab:focus {
+        outline: 2px solid rgba(224, 122, 95, 0.75);
+        outline-offset: 2px;
+      }
+
+      .top-tab[aria-selected="true"] {
+        background: var(--accent);
+        color: #ffffff;
+        border-color: var(--accent);
+      }
+
+      .unit-panel {
+        display: none;
+      }
+      .unit-panel.active {
+        display: block;
+      }
+
+      /* ===== Accordion ===== */
+      .accordion-item {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        margin-bottom: 18px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .accordion-button {
+        width: 100%;
+        background: var(--card);
+        border: 0;
+        padding: 18px 22px;
+        text-align: left;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        color: var(--heading);
+      }
+
+      .accordion-button:hover {
+        background: rgba(224, 122, 95, 0.08);
+      }
+
+      .chev {
+        transition: transform 0.25s ease;
+        font-size: 18px;
+        color: var(--muted);
+        margin-left: 12px;
+      }
+
+      .accordion-button[aria-expanded="true"] .chev {
+        transform: rotate(90deg);
+        color: var(--heading);
+      }
+
+      .accordion-panel {
+        padding: 0 22px 22px 22px;
+        border-top: 1px solid var(--border);
+        line-height: 1.65;
+        font-size: 16px;
+        color: var(--text);
+      }
+
+      .accordion-panel p {
+        margin: 12px 0 0;
+      }
+      .accordion-panel ul {
+        margin: 14px 0 0 20px;
+      }
+      .accordion-panel li {
+        margin-bottom: 10px;
+      }
+      .accordion-panel ol {
+        margin: 12px 0 0 22px;
+      }
+      .accordion-panel h3 {
+        margin: 14px 0 6px;
+        font-size: 17px;
+        color: var(--heading);
+      }
+
+      .collapse {
+        display: none;
+      }
+      .collapse.show {
+        display: block;
+      }
+
+      /* Buttons / links */
+      .pdf-link {
+        display: inline-block;
+        margin-top: 14px;
+        padding: 12px 18px;
+        background: var(--accent);
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 700;
+        border: 0;
+      }
+      .pdf-link:hover {
+        opacity: 0.9;
+      }
+
+      /* Tables */
+      .table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin-top: 12px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 820px;
+        background: #ffffff;
+      }
+
+      th,
+      td {
+        border: 1px solid rgba(31, 47, 48, 0.18);
+        padding: 10px;
+        vertical-align: top;
+        color: var(--text);
+        font-size: 15px;
+        line-height: 1.55;
+      }
+
+      thead th {
+        background: rgba(31, 47, 48, 0.06);
+        color: var(--heading);
+        text-align: left;
+      }
+
+      caption {
+        text-align: left;
+        padding: 0 0 10px 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      /* Resources sub-sections */
+      .resource-subsection {
+        margin-top: 14px;
+        padding: 14px 16px;
+        background: rgba(224, 122, 95, 0.1);
+        border-left: 4px solid var(--accent);
+        border-radius: 10px;
+      }
+      .resource-subsection h4 {
+        margin: 0 0 8px;
+        color: var(--heading);
+        font-size: 16px;
+      }
+      .resource-subsection p {
+        margin: 0;
+      }
+
+      @media (max-width: 900px) {
+        .container {
+          padding: 36px 24px;
+        }
+        h1 {
+          font-size: 30px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Basketball</h1>
+      <div class="subtitle">
+        Select
+        <strong>Advanced</strong>
+        or
+        <strong>Beginner</strong>
+        to view the unit materials.
+      </div>
+
+      <!-- Top Tabs -->
+      <div class="top-tabs" role="tablist" aria-label="Basketball unit level tabs">
+        <button class="top-tab" role="tab" id="tab-advanced" aria-controls="panel-advanced" aria-selected="true" tabindex="0" data-unit-tab="panel-advanced">Advanced</button>
+        <button class="top-tab" role="tab" id="tab-beginner" aria-controls="panel-beginner" aria-selected="false" tabindex="-1" data-unit-tab="panel-beginner">Beginner</button>
+      </div>
+
+      <!-- ===================== ADVANCED PANEL ===================== -->
+      <section class="unit-panel active" id="panel-advanced" role="tabpanel" aria-labelledby="tab-advanced">
+        <div class="accordion" id="advancedAccordion">
+          <!-- a. Essential Questions -->
+          <div class="accordion-item">
+            <button class="accordion-button" type="button" id="adv-btn-eq" aria-expanded="false" data-accordion-target="adv-panel-eq">
+              <span>Essential Questions</span>
+              <span class="chev">›</span>
+            </button>
+            <div class="accordion-panel collapse" id="adv-panel-eq" role="region" aria-labelledby="adv-btn-eq">
+              <ul>
+                <li>EQ1: Why is basketball considered to be a lifelong activity or sport?</li>
+                <li>EQ2: How can learning to play basketball help you play other invasion games?</li>
+                <li>EQ3: Why is force production and force absorption important when playing basketball?</li>
+                <li>EQ4: How can basketball help individuals learn to work as a team?</li>
+                <li>EQ5: Why are rules necessary to play basketball safely and fairly?</li>
+                <li>EQ6: How can playing basketball contribute to a person’s overall fitness both now and in the future?</li>
+                <li>EQ7: How do the different ways of scoring affect game play during basketball?</li>
+                <li>EQ8: How can a team most effectively keep the other team from scoring?</li>
+                <li>EQ9: How can fair play enhance the enjoyment of the game of basketball?</li>
+                <li>EQ10: How could you use what you have learned in basketball in other invasion games?</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- b. Grade Span Indicators and Unit Goals -->
+          <div class="accordion-item">
+            <button class="accordion-button" type="button" id="adv-btn-standards" aria-expanded="false" data-accordion-target="adv-panel-standards">
+              <span>Grade Span Indicators and Unit Goals</span>
+              <span class="chev">›</span>
+            </button>
+            <div class="accordion-panel collapse" id="adv-panel-standards" role="region" aria-labelledby="adv-btn-standards">
+              <div class="table-wrap">
+                <table role="table" aria-label="Basketball standards and learning outcomes">
+                  <caption>Transferred from the prior basketball unit page (Advanced).</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Lesson(s)</th>
+                      <th scope="col">Standard</th>
+                      <th scope="col">Learning Outcome</th>
+                      <th scope="col">Assessment</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1-20 (All)</td>
+                      <td>Demonstrate proper dribbling technique</td>
+                      <td>Complete dribbling drill without errors</td>
+                      <td>Dribbling obstacle course</td>
+                    </tr>
+                    <tr>
+                      <td>7-10</td>
+                      <td>Execute a layup with correct form</td>
+                      <td>Make 7/10 layups successfully</td>
+                      <td>Layup drill</td>
+                    </tr>
+                    <tr>
+                      <td>1-3, 10</td>
+                      <td>Pass accurately using chest and bounce pass</td>
+                      <td>Pass accurately to a moving partner</td>
+                      <td>Passing relay</td>
+                    </tr>
+                    <tr>
+                      <td>1-20 (All)</td>
+                      <td>Demonstrate proper defensive stance</td>
+                      <td>Maintain stance for 1-minute drill</td>
+                      <td>Defensive shuffle drill</td>
+                    </tr>
+                    <tr>
+                      <td>1-3, 10</td>
+                      <td>Understand offensive strategies</td>
+                      <td>Explain key plays and movements</td>
+                      <td>Film analysis of offensive plays</td>
+                    </tr>
+                    <tr>
+                      <td>10</td>
+                      <td>Execute a pick and roll</td>
+                      <td>Complete drill with proper timing</td>
+                      <td>Pick and roll simulation</td>
+                    </tr>
+                    <tr>
+                      <td>1-20 (All)</td>
+                      <td>Demonstrate proper shooting mechanics</td>
+                      <td>Make 5/10 mid-range shots</td>
+                      <td>Shooting fundamentals drill</td>
+                    </tr>
+
+                    <tr>
+                      <td>1-20 (All)</td>
+                      <td>
+                        <div>
+                          <strong>S4.H3.L1:</strong>
+                          <em>Uses communication skills and strategies that promote team/ group dynamics.</em>
+                        </div>
+                        <div>
+                          <strong>S4.H4.L1:</strong>
+                          <em>Solves problems and thinks critically in physical activity and/ or dance settings, both as an individual and in groups.</em>
+                        </div>
+                      </td>
+                      <td>
+                        <div>(1) Evaluate your team’s performance during game play.</div>
+                        <div>(2) Design strategies to improve your team’s game play performance.</div>
+                        <div>(3) 4 out of 5 teammates maintain position and move to open space to receive a pass during game play.</div>
+                        <div>(4) Sets up plays to position the team for scoring opportunities on 4 out of 5 offensive opportunities during game play.</div>
+                        <div>(5) Consistently moves to open space to receive a pass.</div>
+                        <div>(6) Create a team playbook.</div>
+                      </td>
+                      <td>
+                        <div>*Sport Ed Roles</div>
+                        <div>*Peer Assessment</div>
+                        <div>*Self-Assessment</div>
+                        <div>*Game Play Rubric</div>
+                        <div>*Team Playbook</div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>3-20</td>
+                      <td>
+                        <strong>S4.H3.L2:</strong>
+                        <em>Assumes a leadership role (e.g., task or group leader, referee, coach) in a physical activity setting.</em>
+                      </td>
+                      <td>
+                        <div>
+                          (1) The students will demonstrate the ability to work as a team by selecting a team name, color, and mascot, completing the team roles form, and poster prior to the end of
+                          class.
+                        </div>
+                        <div>(2) Create a basketball warm up with your team.</div>
+                      </td>
+                      <td>
+                        <div>*Sport Ed Roles</div>
+                        <div>*Team Responsibility Rubric</div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>20</td>
+                      <td>
+                        <strong>S5.H2.L2:</strong>
+                        <em>Chooses an appropriate level of challenge to experience success and desire to participate in a self-selected physical activity.</em>
+                      </td>
+                      <td>Select opponents to challenge.</td>
+                      <td>*Team Responsibility Rubric</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- c. Equipment & Materials -->
+          <div class="accordion-item">
+            <button class="accordion-button" type="button" id="adv-btn-equip" aria-expanded="false" data-accordion-target="adv-panel-equip">
+              <span>Equipment &amp; Materials</span>
+              <span class="chev">›</span>
+            </button>
+            <div class="accordion-panel collapse" id="adv-panel-equip" role="region" aria-labelledby="adv-btn-equip">
+              <h3>Equipment</h3>
+              <ol>
+                <li>
+                  <strong>Hoops:</strong>
+                  Two hoops with the rim at 10 feet from the ground are needed to play a full court basketball game. Games can be modified to play half-court games depending on the class size and
+                  gym/outdoor space.
+                </li>
+                <li>
+                  <strong>Basketballs:</strong>
+                  High school students should use basketballs that are 28.5-29.5 inches in circumference (size 6 or size 7).
+                </li>
+                <li>
+                  <strong>Courts:</strong>
+                  Indoor or outdoor courts can be used for this unit. Indoor courts are encouraged as the floors are typically safer to prevent injuries, but outdoor courts can be used or introduced
+                  so students can witness that basketball can be played indoors and outdoors.
+                </li>
+                <li>
+                  <strong>Jerseys:</strong>
+                  It’s not required but it’s encouraged that teams use some sort of jersey or pinnie to designate teams. Basketball is such a fast-paced sport and it makes it difficult to locate team
+                  members and opponents without jerseys.
+                </li>
+                <li>
+                  <strong>Scoreboards:</strong>
+                  Electronic or manual scoreboards are encouraged. Students will be able to keep track of the score while competing. Students will also be able to assist with scorekeeping while their
+                  team is completing other tasks for basketball other than playing.
+                </li>
+                <li>
+                  <strong>Other:</strong>
+                  Cones, tennis balls, buckets, paper, pencils, poster board, markers/colored pencils, music (optional).
+                </li>
+              </ol>
+
+              <h3>Facilities/Space</h3>
+              <p>
+                Indoor or outdoor courts can be used for this unit. Indoor courts are encouraged as the floors are typically safer to prevent injuries, but outdoor courts can be used, so students can
+                witness that basketball can be played indoors and outdoors. For full court regulation games, two hoops with the rim at 10 feet from the ground are needed. Games can be modified to play
+                half-court depending on the class size and gym/outdoor space.
+              </p>
+            </div>
+          </div>
+
+          <!-- d. Block Plan -->
+          <div class="accordion-item">
+            <button class="accordion-button" type="button" id="adv-btn-block" aria-expanded="false" data-accordion-target="adv-panel-block">
+              <span>Block Plan</span>
+              <span class="chev">›</span>
+            </button>
+            <div class="accordion-panel collapse" id="adv-panel-block" role="region" aria-labelledby="adv-btn-block">
+              <p>Click the button below to view the Advanced Basketball Sport Ed Block Plan:</p>
+              <!-- Update the href to your real file path -->
+              <a class="pdf-link" href="path/to/your-file.pdf" target="_blank" rel="noopener">Open PDF</a>
+            </div>
+          </div>
+
+          <!-- e. Lesson Plan -->
+          <div class="accordion-item">
+            <button class="accordion-button" type="button" id="adv-btn-lesson" aria-expanded="false" data-accordion-target="adv-panel-lesson">
+              <span>Lesson Plan</span>
+              <span class="chev">›</span>
+            </button>
+            <div class="accordion-panel collapse" id="adv-panel-lesson" role="region" aria-labelledby="adv-btn-lesson">
+              <p>Place holder</p>
+            </div>
+          </div>
+
+          <!-- f. Assessments & Grading Criteria -->
+          <div class="accordion-item">
+            <button class="accordion-button" type="button" id="adv-btn-assess" aria-expanded="false" data-accordion-target="adv-panel-assess">
+              <span>Assessments &amp; Grading Criteria</span>
+              <span class="chev">›</span>
+            </button>
+            <div class="accordion-panel collapse" id="adv-panel-assess" role="region" aria-labelledby="adv-btn-assess">
+              <p>Place holder</p>
+            </div>
+          </div>
+
+          <!-- g. Resources (Teacher / Student / Home) -->
+          <div class="accordion-item">
+            <button class="accordion-button" type="button" id="adv-btn-res" aria-expanded="false" data-accordion-target="adv-panel-res">
+              <span>Resources</span>
+              <span class="chev">›</span>
+            </button>
+            <div class="accordion-panel collapse" id="adv-panel-res" role="region" aria-labelledby="adv-btn-res">
+              <div class="resource-subsection">
+                <h4>Teacher</h4>
+                <p>Place holder</p>
+              </div>
+
+              <div class="resource-subsection">
+                <h4>Student</h4>
+                <p>Place holder</p>
+              </div>
+
+              <div class="resource-subsection">
+                <h4>Home</h4>
+                <p>Place holder</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== BEGINNER PANEL (EMPTY ACCORDION CONTENT) ===================== -->
+      <section class="unit-panel" id="panel-beginner" role="tabpanel" aria-labelledby="tab-beginner">
+        <div class="accordion" id="beginnerAccordion">
+          <div class="accordion-item">
+            <button class="accordion-button" type="button" id="beg-btn-eq" aria-expanded="false" data-accordion-target="beg-panel-eq">
+              <span>Essential Questions</span>
+              <span class="chev">›</span>
+            </button>
+            <div class="accordion-panel collapse" id="beg-panel-eq" role="region" aria-labelledby="beg-btn-eq"></div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-button" type="button" id="beg-btn-goals" aria-expanded="false" data-accordion-target="beg-panel-goals">
+              <span>Grade Span Indicators and Unit Goals</span>
+              <span class="chev">›</span>
+            </button>
+            <div class="accordion-panel collapse" id="beg-panel-goals" role="region" aria-labelledby="beg-btn-goals"></div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-button" type="button" id="beg-btn-equip" aria-expanded="false" data-accordion-target="beg-panel-equip">
+              <span>Equipment &amp; Materials</span>
+              <span class="chev">›</span>
+            </button>
+            <div class="accordion-panel collapse" id="beg-panel-equip" role="region" aria-labelledby="beg-btn-equip"></div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-button" type="button" id="beg-btn-block" aria-expanded="false" data-accordion-target="beg-panel-block">
+              <span>Block Plan</span>
+              <span class="chev">›</span>
+            </button>
+            <div class="accordion-panel collapse" id="beg-panel-block" role="region" aria-labelledby="beg-btn-block"></div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-button" type="button" id="beg-btn-lesson" aria-expanded="false" data-accordion-target="beg-panel-lesson">
+              <span>Lesson Plan</span>
+              <span class="chev">›</span>
+            </button>
+            <div class="accordion-panel collapse" id="beg-panel-lesson" role="region" aria-labelledby="beg-btn-lesson"></div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-button" type="button" id="beg-btn-assess" aria-expanded="false" data-accordion-target="beg-panel-assess">
+              <span>Assessments &amp; Grading Criteria</span>
+              <span class="chev">›</span>
+            </button>
+            <div class="accordion-panel collapse" id="beg-panel-assess" role="region" aria-labelledby="beg-btn-assess"></div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-button" type="button" id="beg-btn-res" aria-expanded="false" data-accordion-target="beg-panel-res">
+              <span>Resources</span>
+              <span class="chev">›</span>
+            </button>
+            <div class="accordion-panel collapse" id="beg-panel-res" role="region" aria-labelledby="beg-btn-res">
+              <div class="resource-subsection">
+                <h4>Teacher</h4>
+                <p></p>
+              </div>
+              <div class="resource-subsection">
+                <h4>Student</h4>
+                <p></p>
+              </div>
+              <div class="resource-subsection">
+                <h4>Home</h4>
+                <p></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      // ===== Top tabs (Advanced/Beginner) =====
+      (function () {
+        const tabButtons = Array.from(document.querySelectorAll("[data-unit-tab]"));
+        const panels = Array.from(document.querySelectorAll(".unit-panel"));
+
+        function activateTopTab(btn, setFocus = true) {
+          const targetId = btn.getAttribute("data-unit-tab");
+          const targetPanel = document.getElementById(targetId);
+          if (!targetPanel) return;
+
+          tabButtons.forEach((b) => {
+            const active = b === btn;
+            b.setAttribute("aria-selected", active ? "true" : "false");
+            b.tabIndex = active ? 0 : -1;
+          });
+
+          panels.forEach((p) => p.classList.remove("active"));
+          targetPanel.classList.add("active");
+
+          if (setFocus) btn.focus();
+        }
+
+        tabButtons.forEach((btn) => {
+          btn.addEventListener("click", () => activateTopTab(btn, false));
+          btn.addEventListener("keydown", (e) => {
+            const idx = tabButtons.indexOf(btn);
+            let nextIdx = null;
+            if (e.key === "ArrowRight") nextIdx = (idx + 1) % tabButtons.length;
+            if (e.key === "ArrowLeft") nextIdx = (idx - 1 + tabButtons.length) % tabButtons.length;
+            if (e.key === "Home") nextIdx = 0;
+            if (e.key === "End") nextIdx = tabButtons.length - 1;
+
+            if (nextIdx !== null) {
+              e.preventDefault();
+              activateTopTab(tabButtons[nextIdx], true);
+            }
+          });
+        });
+      })();
+
+      // ===== Accordions (multiple open supported) =====
+      document.querySelectorAll("[data-accordion-target]").forEach((btn) => {
+        const panelId = btn.getAttribute("data-accordion-target");
+        const panel = document.getElementById(panelId);
+        if (!panel) return;
+
+        btn.addEventListener("click", () => {
+          const isOpen = panel.classList.contains("show");
+          btn.setAttribute("aria-expanded", String(!isOpen));
+          panel.classList.toggle("show", !isOpen);
+        });
+      });
+    </script>
+  </body>
+</html>
