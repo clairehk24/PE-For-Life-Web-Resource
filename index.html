@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PE for Life Web Resource</title>
+    <style>
+      :root {
+        /* Warm Academic palette */
+        --bg: #3a5253; /* primary background */
+        --panel: #2f4445; /* darker teal for sidebar/panels */
+        --panel2: #263a3b; /* deepest teal for depth */
+        --text: #ffffff; /* text on dark */
+        --muted: #d7e0de; /* muted text on dark */
+        --accent: #e07a5f; /* coral accent */
+        --surface: #f4f1de; /* light section background */
+        --heading: #1f2f30; /* dark heading text */
+        --border: rgba(255, 255, 255, 0.14);
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+        --sidebar-w: 340px;
+        --radius: 14px;
+        --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: var(--font);
+        background: radial-gradient(1200px 700px at 20% 0%, #446364 0%, var(--bg) 55%);
+        color: var(--text);
+      }
+
+      .app {
+        height: 100%;
+        display: grid;
+        grid-template-columns: var(--sidebar-w) 1fr;
+      }
+
+      /* Sidebar */
+      aside {
+        background: linear-gradient(180deg, var(--panel) 0%, var(--panel2) 100%);
+        border-right: 1px solid var(--border);
+        padding: 18px 14px;
+        overflow: auto;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 10px 14px;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 12px;
+      }
+      .logo {
+        height: 40px;
+        box-shadow: var(--shadow);
+        flex: none;
+      }
+      .brand h1 {
+        font-size: 28px;
+        margin: 0;
+        letter-spacing: 0.2px;
+        line-height: 1.2;
+      }
+      .brand p {
+        margin: 2px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .hint {
+        font-size: 12px;
+        color: var(--muted);
+        padding: 0 10px 12px;
+      }
+
+      .tree {
+        padding: 0 6px 18px;
+      }
+
+      /* Accessible expand/collapse using <details> */
+      details {
+        border-radius: 12px;
+        margin: 6px 0;
+      }
+      details > summary {
+        list-style: none;
+        cursor: pointer;
+        padding: 10px 10px;
+        border: 1px solid transparent;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        user-select: none;
+      }
+      details > summary::-webkit-details-marker {
+        display: none;
+      }
+
+      details > summary:hover {
+        border-color: var(--border);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      details[open] > summary {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: var(--border);
+      }
+
+      .twisty {
+        width: 18px;
+        height: 18px;
+        flex: none;
+        border-radius: 6px;
+        display: grid;
+        place-items: center;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid var(--border);
+        font-size: 12px;
+        color: var(--muted);
+      }
+      details[open] .twisty {
+        color: var(--text);
+      }
+
+      .node-title {
+        font-weight: 600;
+        font-size: 13px;
+        letter-spacing: 0.15px;
+      }
+      .node-meta {
+        margin-left: auto;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      /* Nested levels indentation */
+      .level {
+        padding-left: 18px;
+        margin: 4px 0 10px;
+        border-left: 1px dashed rgba(255, 255, 255, 0.18);
+      }
+
+      .links {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 4px 0 8px 10px;
+      }
+
+      a.navlink {
+        color: var(--text);
+        text-decoration: none;
+        font-size: 13px;
+        padding: 8px 10px;
+        border-radius: 10px;
+        border: 1px solid transparent;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      a.navlink:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: var(--border);
+      }
+      a.navlink.active {
+        background: rgba(224, 122, 95, 0.18);
+        border-color: rgba(224, 122, 95, 0.45);
+      }
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: rgba(224, 122, 95, 0.95);
+        flex: none;
+        box-shadow: 0 0 0 4px rgba(224, 122, 95, 0.18);
+      }
+      .file {
+        width: 18px;
+        height: 18px;
+        flex: none;
+        border-radius: 6px;
+        display: grid;
+        place-items: center;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      /* Main content */
+      main {
+        display: flex;
+        flex-direction: column;
+        min-width: 0; /* allows iframe to shrink */
+        background: var(--surface);
+        color: var(--heading);
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 16px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        background: rgba(244, 241, 222, 0.85);
+        backdrop-filter: blur(10px);
+      }
+      .topbar .title {
+        font-weight: 700;
+        letter-spacing: 0.2px;
+        color: var(--heading);
+      }
+      .topbar .subtitle {
+        color: rgba(31, 47, 48, 0.7);
+        font-size: 12px;
+        margin-top: 2px;
+      }
+      .topbar .left {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+      .topbar .right {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        color: rgba(31, 47, 48, 0.7);
+        font-size: 12px;
+        white-space: nowrap;
+      }
+      .pill {
+        padding: 8px 10px;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.65);
+      }
+
+      .viewer {
+        position: relative;
+        flex: 1;
+        min-height: 0;
+        padding: 16px;
+      }
+
+      /* Viewer / iframe scrolling fix */
+      .viewer {
+        display: flex;
+        flex-direction: column;
+      }
+      #contentFrame {
+        flex: 1;
+        min-height: 0; /* critical for flexbox scrolling */
+        width: 100%;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        border-radius: var(--radius);
+        background: #ffffff;
+        overflow: auto;
+      }
+
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        border-radius: var(--radius);
+        background: #ffffff;
+        box-shadow: var(--shadow);
+      }
+
+      .empty {
+        position: absolute;
+        inset: 16px;
+        border: 1px dashed rgba(31, 47, 48, 0.28);
+        border-radius: var(--radius);
+        display: grid;
+        place-items: center;
+        padding: 22px;
+        text-align: center;
+        color: rgba(31, 47, 48, 0.7);
+        background: rgba(255, 255, 255, 0.35);
+        pointer-events: none;
+      }
+      .empty h2 {
+        margin: 0 0 8px;
+        color: var(--heading);
+        font-size: 18px;
+      }
+      .empty p {
+        margin: 0;
+        max-width: 60ch;
+        line-height: 1.5;
+        font-size: 13px;
+      }
+
+      /* Responsive: collapse sidebar on small screens */
+      @media (max-width: 900px) {
+        .app {
+          grid-template-columns: 1fr;
+        }
+        aside {
+          position: sticky;
+          top: 0;
+          z-index: 10;
+          max-height: 52vh;
+        }
+        .viewer {
+          height: 48vh;
+        }
+        :root {
+          --sidebar-w: 100%;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <aside>
+        <div class="brand">
+          <img src="images/HK logo running man white stroke.png" alt="PE for Life Logo" class="logo" />
+          <div>
+            <h1>PE for Life</h1>
+            <p>Lesson Plans Library</p>
+          </div>
+        </div>
+
+        <div class="hint">
+          Tip: Click an activity link to load it on the right. Download versions of the activity instructions are available at the top of the frame. Activity documents are also available for viewing
+          and download.&nbsp;
+        </div>
+
+        <nav class="tree" aria-label="Lesson plan navigation">
+          <!-- LEVEL 1: Introduction -->
+          <details open>
+            <summary>
+              <span class="twisty" aria-hidden="true">▸</span>
+              <span class="node-title">Introduction</span>
+            </summary>
+            <div class="level">
+              <div class="links">
+                <a class="navlink" href="welcome.html" target="contentFrame" data-title="Introduction • Welcome" id="welcomeLink">
+                  <span class="file" aria-hidden="true">📄</span>
+                  Welcome
+                </a>
+                <a class="navlink" href="Copyright_info.html" target="contentFrame" data-title="Introduction • Copyright Information">
+                  <span class="file" aria-hidden="true">📄</span>
+                  Copyright Information
+                </a>
+              </div>
+            </div>
+          </details>
+
+          <!-- LEVEL 1: Elementary -->
+          <details open>
+            <summary>
+              <span class="twisty" aria-hidden="true">▸</span>
+              <span class="node-title">Elementary</span>
+            </summary>
+
+            <div class="level">
+              <!-- LEVEL 2: K-2 -->
+              <details open>
+                <summary>
+                  <span class="twisty" aria-hidden="true">▸</span>
+                  <span class="node-title">K-2</span>
+                </summary>
+
+                <div class="level">
+                  <!-- LEVEL 3: Locomotor/nonlocomotory -->
+                  <details>
+                    <summary>
+                      <span class="twisty" aria-hidden="true">▸</span>
+                      <span class="node-title">Locomotor/nonlocomotory</span>
+                    </summary>
+                    <div class="level">
+                      <div class="links">
+                        <a class="navlink" href="Loco_Overview.html" target="contentFrame" data-title="Elementary • K-2 • Locomotor/nonlocomotory • Overview">
+                          <span class="file" aria-hidden="true">📄</span>
+                          Overview
+                        </a>
+                        <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Elementary • K-2 • Locomotor/nonlocomotory • Content Set I">
+                          <span class="file" aria-hidden="true">📄</span>
+                          Content Set I
+                        </a>
+                        <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Elementary • K-2 • Locomotor/nonlocomotory • Content Set II">
+                          <span class="file" aria-hidden="true">📄</span>
+                          Content Set II
+                        </a>
+                        <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Elementary • K-2 • Locomotor/nonlocomotory • Content Set III">
+                          <span class="file" aria-hidden="true">📄</span>
+                          Content Set III
+                        </a>
+                      </div>
+                    </div>
+                  </details>
+
+                  <!-- LEVEL 3: Manipulative -->
+                  <details>
+                    <summary>
+                      <span class="twisty" aria-hidden="true">▸</span>
+                      <span class="node-title">Manipulative</span>
+                    </summary>
+                    <div class="level">
+                      <div class="links">
+                        <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Elementary • K-2 • Manipulative • Overview">
+                          <span class="file" aria-hidden="true">📄</span>
+                          Overview
+                        </a>
+                        <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Elementary • K-2 • Manipulative • Content Set I">
+                          <span class="file" aria-hidden="true">📄</span>
+                          Content Set I
+                        </a>
+                        <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Elementary • K-2 • Manipulative • Content Set II">
+                          <span class="file" aria-hidden="true">📄</span>
+                          Content Set II
+                        </a>
+                        <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Elementary • K-2 • Manipulative • Content Set III">
+                          <span class="file" aria-hidden="true">📄</span>
+                          Content Set III
+                        </a>
+                      </div>
+                    </div>
+                  </details>
+
+                  <!-- LEVEL 3: Rhythm & Dance -->
+                  <details>
+                    <summary>
+                      <span class="twisty" aria-hidden="true">▸</span>
+                      <span class="node-title">Rhythm &amp; Dance</span>
+                    </summary>
+                    <div class="level">
+                      <div class="links">
+                        <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Elementary • K-2 • Rhythm &amp; Dance • Overview">
+                          <span class="file" aria-hidden="true">📄</span>
+                          Overview
+                        </a>
+                        <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Elementary • K-2 • Rhythm &amp; Dance • Content Set I">
+                          <span class="file" aria-hidden="true">📄</span>
+                          Content Set I
+                        </a>
+                        <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Elementary • K-2 • Rhythm &amp; Dance • Content Set II">
+                          <span class="file" aria-hidden="true">📄</span>
+                          Content Set II
+                        </a>
+                        <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Elementary • K-2 • Rhythm &amp; Dance • Content Set III">
+                          <span class="file" aria-hidden="true">📄</span>
+                          Content Set III
+                        </a>
+                      </div>
+                    </div>
+                  </details>
+
+                  <!-- LEVEL 3: Developmental Gymnastics -->
+                  <details>
+                    <summary>
+                      <span class="twisty" aria-hidden="true">▸</span>
+                      <span class="node-title">Developmental Gymnastics</span>
+                    </summary>
+                    <div class="level">
+                      <div class="links">
+                        <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Elementary • K-2 • Developmental Gymnastics • Overview">
+                          <span class="file" aria-hidden="true">📄</span>
+                          Overview
+                        </a>
+                        <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Elementary • K-2 • Developmental Gymnastics • Content Set I">
+                          <span class="file" aria-hidden="true">📄</span>
+                          Content Set I
+                        </a>
+                        <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Elementary • K-2 • Developmental Gymnastics • Content Set II">
+                          <span class="file" aria-hidden="true">📄</span>
+                          Content Set II
+                        </a>
+                        <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Elementary • K-2 • Developmental Gymnastics • Content Set III">
+                          <span class="file" aria-hidden="true">📄</span>
+                          Content Set III
+                        </a>
+                      </div>
+                    </div>
+                  </details>
+                </div>
+              </details>
+
+              <!-- LEVEL 2: 3-5 -->
+              <details>
+                <summary>
+                  <span class="twisty" aria-hidden="true">▸</span>
+                  <span class="node-title">3-5</span>
+                </summary>
+
+                <div class="level">
+                  <!-- LEVEL 3: Territory/Invasion -->
+                  <details>
+                    <summary>
+                      <span class="twisty" aria-hidden="true">▸</span>
+                      <span class="node-title">Territory/Invasion</span>
+                    </summary>
+                    <div class="level">
+                      <div class="links">
+                        <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Elementary • 3-5 • Territory/Invasion • Soccer">
+                          <span class="file" aria-hidden="true">📄</span>
+                          Soccer
+                        </a>
+                        <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Elementary • 3-5 • Territory/Invasion • Basketball">
+                          <span class="file" aria-hidden="true">📄</span>
+                          Basketball
+                        </a>
+                      </div>
+                    </div>
+                  </details>
+
+                  <!-- LEVEL 3: Striking/Fielding -->
+                  <details>
+                    <summary>
+                      <span class="twisty" aria-hidden="true">▸</span>
+                      <span class="node-title">Striking/Fielding</span>
+                    </summary>
+                    <div class="level">
+                      <div class="links">
+                        <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Elementary • 3-5 • Striking/Fielding • Striking Activities">
+                          <span class="file" aria-hidden="true">📄</span>
+                          Striking Activities
+                        </a>
+                      </div>
+                    </div>
+                  </details>
+
+                  <!-- LEVEL 3: Net/Wall -->
+                  <details>
+                    <summary>
+                      <span class="twisty" aria-hidden="true">▸</span>
+                      <span class="node-title">Net/Wall</span>
+                    </summary>
+                    <div class="level">
+                      <div class="links">
+                        <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Elementary • 3-5 • Net/Wall • Volleying">
+                          <span class="file" aria-hidden="true">📄</span>
+                          Volleying
+                        </a>
+                      </div>
+                    </div>
+                  </details>
+
+                  <!-- LEVEL 3: Target Games -->
+                  <details>
+                    <summary>
+                      <span class="twisty" aria-hidden="true">▸</span>
+                      <span class="node-title">Target Games</span>
+                    </summary>
+                    <div class="level">
+                      <div class="links">
+                        <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Elementary • 3-5 • Target Games • Target Activities">
+                          <span class="file" aria-hidden="true">📄</span>
+                          Target Activities
+                        </a>
+                      </div>
+                    </div>
+                  </details>
+
+                  <!-- LEVEL 3: Rhythm & Dance -->
+                  <details>
+                    <summary>
+                      <span class="twisty" aria-hidden="true">▸</span>
+                      <span class="node-title">Rhythm &amp; Dance</span>
+                    </summary>
+                    <div class="level">
+                      <div class="links">
+                        <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Elementary • 3-5 • Rhythm &amp; Dance • Placeholder">
+                          <span class="file" aria-hidden="true">📄</span>
+                          Placeholder
+                        </a>
+                      </div>
+                    </div>
+                  </details>
+
+                  <!-- LEVEL 3: Developmental Gymnastics -->
+                  <details>
+                    <summary>
+                      <span class="twisty" aria-hidden="true">▸</span>
+                      <span class="node-title">Developmental Gymnastics</span>
+                    </summary>
+                    <div class="level">
+                      <div class="links">
+                        <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Elementary • 3-5 • Developmental Gymnastics • Placeholder">
+                          <span class="file" aria-hidden="true">📄</span>
+                          Placeholder
+                        </a>
+                      </div>
+                    </div>
+                  </details>
+                </div>
+              </details>
+            </div>
+          </details>
+
+          <!-- LEVEL 1: Secondary -->
+          <details open>
+            <summary>
+              <span class="twisty" aria-hidden="true">▸</span>
+              <span class="node-title">Secondary</span>
+            </summary>
+
+            <div class="level">
+              <!-- LEVEL 2: Territory/Invasion Games -->
+              <details>
+                <summary>
+                  <span class="twisty" aria-hidden="true">▸</span>
+                  <span class="node-title">Territory/Invasion Games</span>
+                </summary>
+                <div class="level">
+                  <div class="links">
+                    <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Secondary • Territory/Invasion Games • Basketball (beginner and advanced)">
+                      <span class="file" aria-hidden="true">📄</span>
+                      Basketball (beginner and advanced)
+                    </a>
+                    <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Secondary • Territory/Invasion Games • Field Hockey">
+                      <span class="file" aria-hidden="true">📄</span>
+                      Field Hockey
+                    </a>
+                    <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Secondary • Territory/Invasion Games • Flag football">
+                      <span class="file" aria-hidden="true">📄</span>
+                      Flag football
+                    </a>
+                    <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Secondary • Territory/Invasion Games • Lacrosse">
+                      <span class="file" aria-hidden="true">📄</span>
+                      Lacrosse
+                    </a>
+                    <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Secondary • Territory/Invasion Games • Soccer">
+                      <span class="file" aria-hidden="true">📄</span>
+                      Soccer
+                    </a>
+                    <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Secondary • Territory/Invasion Games • Team Handball">
+                      <span class="file" aria-hidden="true">📄</span>
+                      Team Handball
+                    </a>
+                    <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Secondary • Territory/Invasion Games • Ultimate">
+                      <span class="file" aria-hidden="true">📄</span>
+                      Ultimate
+                    </a>
+                  </div>
+                </div>
+              </details>
+
+              <!-- LEVEL 2: Striking/Fielding -->
+              <details>
+                <summary>
+                  <span class="twisty" aria-hidden="true">▸</span>
+                  <span class="node-title">Striking/Fielding</span>
+                </summary>
+                <div class="level">
+                  <div class="links">
+                    <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Secondary • Striking/Fielding • Softball">
+                      <span class="file" aria-hidden="true">📄</span>
+                      Softball
+                    </a>
+                  </div>
+                </div>
+              </details>
+
+              <!-- LEVEL 2: Net/Wall -->
+              <details>
+                <summary>
+                  <span class="twisty" aria-hidden="true">▸</span>
+                  <span class="node-title">Net/Wall</span>
+                </summary>
+                <div class="level">
+                  <div class="links">
+                    <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Secondary • Net/Wall • Badminton">
+                      <span class="file" aria-hidden="true">📄</span>
+                      Badminton
+                    </a>
+                    <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Secondary • Net/Wall • Pickleball">
+                      <span class="file" aria-hidden="true">📄</span>
+                      Pickleball
+                    </a>
+                    <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Secondary • Net/Wall • Tennis">
+                      <span class="file" aria-hidden="true">📄</span>
+                      Tennis
+                    </a>
+                    <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Secondary • Net/Wall • Volleyball">
+                      <span class="file" aria-hidden="true">📄</span>
+                      Volleyball
+                    </a>
+                  </div>
+                </div>
+              </details>
+
+              <!-- LEVEL 2: Target Games -->
+              <details>
+                <summary>
+                  <span class="twisty" aria-hidden="true">▸</span>
+                  <span class="node-title">Target Games</span>
+                </summary>
+                <div class="level">
+                  <div class="links">
+                    <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Secondary • Target Games • Disc golf">
+                      <span class="file" aria-hidden="true">📄</span>
+                      Disc golf
+                    </a>
+                    <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Secondary • Target Games • Golf">
+                      <span class="file" aria-hidden="true">📄</span>
+                      Golf
+                    </a>
+                  </div>
+                </div>
+              </details>
+
+              <!-- LEVEL 2: Lifetime/Leisure & Wellness -->
+              <details>
+                <summary>
+                  <span class="twisty" aria-hidden="true">▸</span>
+                  <span class="node-title">Lifetime/Leisure &amp; Wellness</span>
+                </summary>
+                <div class="level">
+                  <div class="links">
+                    <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Secondary • Lifetime/Leisure &amp; Wellness • Fitness Walking">
+                      <span class="file" aria-hidden="true">📄</span>
+                      Fitness Walking
+                    </a>
+                    <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Secondary • Lifetime/Leisure &amp; Wellness • Strength &amp; Conditioning">
+                      <span class="file" aria-hidden="true">📄</span>
+                      Strength &amp; Conditioning
+                    </a>
+                    <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Secondary • Lifetime/Leisure &amp; Wellness • Track &amp; Field">
+                      <span class="file" aria-hidden="true">📄</span>
+                      Track &amp; Field
+                    </a>
+                    <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Secondary • Lifetime/Leisure &amp; Wellness • Yoga">
+                      <span class="file" aria-hidden="true">📄</span>
+                      Yoga
+                    </a>
+                  </div>
+                </div>
+              </details>
+
+              <!-- LEVEL 2: Rhythm & Dance -->
+              <details>
+                <summary>
+                  <span class="twisty" aria-hidden="true">▸</span>
+                  <span class="node-title">Rhythm &amp; Dance</span>
+                </summary>
+                <div class="level">
+                  <div class="links">
+                    <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Secondary • Rhythm &amp; Dance • Country Western Line Dance">
+                      <span class="file" aria-hidden="true">📄</span>
+                      Country Western Line Dance
+                    </a>
+                    <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Secondary • Rhythm &amp; Dance • Creative Dance">
+                      <span class="file" aria-hidden="true">📄</span>
+                      Creative Dance
+                    </a>
+                    <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Secondary • Rhythm &amp; Dance • Cultural Dance">
+                      <span class="file" aria-hidden="true">📄</span>
+                      Cultural Dance
+                    </a>
+                    <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Secondary • Rhythm &amp; Dance • Line Dance">
+                      <span class="file" aria-hidden="true">📄</span>
+                      Line Dance
+                    </a>
+                  </div>
+                </div>
+              </details>
+
+              <!-- LEVEL 2: Adventure/Outdoor Education -->
+              <details>
+                <summary>
+                  <span class="twisty" aria-hidden="true">▸</span>
+                  <span class="node-title">Adventure/Outdoor Education</span>
+                </summary>
+                <div class="level">
+                  <div class="links">
+                    <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Secondary • Adventure/Outdoor Education • Adventure based learning">
+                      <span class="file" aria-hidden="true">📄</span>
+                      Adventure based learning
+                    </a>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </details>
+
+          <!-- LEVEL 1: Resources -->
+          <details open>
+            <summary>
+              <span class="twisty" aria-hidden="true">▸</span>
+              <span class="node-title">Resources</span>
+            </summary>
+            <div class="level">
+              <div class="links">
+                <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Resources • Warmups/cooldowns">
+                  <span class="file" aria-hidden="true">📄</span>
+                  Warmups/cooldowns
+                </a>
+                <a class="navlink" href="Placeholder.html" target="contentFrame" data-title="Resources • Other potential resources">
+                  <span class="file" aria-hidden="true">📄</span>
+                  Other potential resources
+                </a>
+              </div>
+            </div>
+          </details>
+        </nav>
+      </aside>
+
+      <main>
+        <div class="topbar">
+          <div class="left">
+            <div class="title" id="pageTitle">Select an activity to view.</div>
+            <div class="subtitle" id="pageSubtitle">Use the menu to the left to expand sections and open a page.</div>
+          </div>
+        </div>
+
+        <div class="viewer">
+          <div class="empty" id="emptyState">
+            <div>
+              <p></p>
+            </div>
+          </div>
+
+          <iframe name="contentFrame" id="contentFrame" title="Lesson Plan Viewer" scrolling="yes"></iframe>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      (function () {
+        const links = Array.from(document.querySelectorAll("a.navlink"));
+        const frame = document.getElementById("contentFrame");
+        const empty = document.getElementById("emptyState");
+        const pageTitle = document.getElementById("pageTitle");
+        const pageSubtitle = document.getElementById("pageSubtitle");
+        const pathPill = document.getElementById("pathPill");
+
+        function openAncestorDetails(el) {
+          let d = el && el.closest ? el.closest("details") : null;
+          while (d) {
+            d.open = true;
+            d = d.parentElement ? d.parentElement.closest("details") : null;
+          }
+        }
+
+        function setActive(link) {
+          links.forEach((a) => a.classList.toggle("active", a === link));
+          const title = link.getAttribute("data-title") || link.textContent.trim();
+          if (pageTitle) pageTitle.textContent = title;
+          if (pageSubtitle) pageSubtitle.textContent = "Loaded in the viewer on the right.";
+          if (pathPill) pathPill.textContent = link.getAttribute("href") || "";
+          if (empty) empty.style.display = "none";
+        }
+
+        // Click behavior: highlight + load in iframe
+        links.forEach((a) => {
+          a.addEventListener("click", (e) => {
+            // allow normal behavior for modified-clicks (new tab etc.)
+            if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+            setActive(a);
+            openAncestorDetails(a);
+            // Ensure iframe navigates even if target attribute is missing/changed
+            if (frame) frame.src = a.getAttribute("href");
+          });
+        });
+
+        // Fix twisty icon based on open/close state
+        const allDetails = Array.from(document.querySelectorAll("details"));
+        function syncTwisty(d) {
+          const t = d.querySelector(":scope > summary .twisty");
+          if (!t) return;
+          t.textContent = d.open ? "▾" : "▸";
+        }
+        allDetails.forEach((d) => {
+          syncTwisty(d);
+          d.addEventListener("toggle", () => syncTwisty(d));
+        });
+
+        // If the iframe navigates (e.g., internal links), update pill best-effort
+        if (frame) {
+          frame.addEventListener("load", () => {
+            try {
+              const href = frame.contentWindow.location.href;
+              const pretty = href.split("/").slice(-4).join("/");
+              if (pathPill && pretty) pathPill.textContent = pretty;
+            } catch (e) {
+              /* cross-origin or blocked - ignore */
+            }
+          });
+        }
+
+        // Auto-launch: Welcome under Introduction (falls back to first link)
+        const welcomeLink = document.getElementById("welcomeLink") || links.find((a) => (a.textContent || "").toLowerCase().includes("welcome")) || links[0];
+
+        if (welcomeLink && frame) {
+          openAncestorDetails(welcomeLink);
+          setActive(welcomeLink);
+          frame.src = welcomeLink.getAttribute("href");
+        }
+      })();
+    </script>
+  </body>
+</html>

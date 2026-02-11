@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><!-- PAGE TITLE -->Unit Overview | PE for Life</title>
+
+    <style>
+      :root {
+        --surface: #f4f1de;
+        --card: #ffffff;
+        --heading: #1f2f30;
+        --text: #2f3e3f;
+        --muted: rgba(31, 47, 48, 0.75);
+        --accent: #e07a5f;
+        --border: rgba(31, 47, 48, 0.14);
+        --radius: 14px;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--font);
+        background: var(--surface);
+        color: var(--text);
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 48px 40px;
+      }
+
+      /* Header */
+      h1 {
+        margin: 0 0 10px;
+        font-size: 36px;
+        color: var(--heading);
+      }
+      .subtitle {
+        font-size: 16px;
+        margin-bottom: 22px;
+        opacity: 0.85;
+      }
+
+      /* Optional “meta” row */
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 0 0 28px;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.65);
+        color: var(--heading);
+        font-size: 13px;
+        line-height: 1;
+        white-space: nowrap;
+      }
+      .pill strong {
+        font-weight: 700;
+      }
+
+      /* Accordion */
+      .accordion-item {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        margin-bottom: 18px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+      .accordion-button {
+        width: 100%;
+        background: var(--card);
+        border: 0;
+        padding: 18px 22px;
+        text-align: left;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .accordion-button:hover {
+        background: rgba(224, 122, 95, 0.08);
+      }
+      .chev {
+        transition: transform 0.25s ease;
+        font-size: 18px;
+        color: var(--muted);
+      }
+      .accordion-button[aria-expanded="true"] .chev {
+        transform: rotate(90deg);
+        color: var(--heading);
+      }
+
+      .accordion-panel {
+        padding: 0 22px 22px 22px;
+        border-top: 1px solid var(--border);
+        line-height: 1.65;
+        font-size: 16px;
+      }
+      .accordion-panel p {
+        margin: 12px 0 0;
+      }
+      .accordion-panel ul {
+        margin: 14px 0 0 20px;
+      }
+      .accordion-panel li {
+        margin-bottom: 12px;
+      }
+
+      .collapse {
+        display: none;
+      }
+      .collapse.show {
+        display: block;
+      }
+
+      /* Download button */
+      .download-btn {
+        display: inline-block;
+        margin-top: 14px;
+        padding: 12px 18px;
+        background: var(--accent);
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 600;
+      }
+      .download-btn:hover {
+        opacity: 0.9;
+      }
+
+      @media (max-width: 900px) {
+        .container {
+          padding: 36px 24px;
+        }
+        h1 {
+          font-size: 30px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- ===== PAGE HEADER (EDIT THESE) ===== -->
+      <h1>
+        <!-- UNIT TITLE -->
+        Overview of Grades K-2 Locomotor/Non-Locomotor Unit
+      </h1>
+      <div class="subtitle">
+        <!-- SHORT DESCRIPTION / DIRECTIONS -->
+        Use the sections below to review unit overview details.
+      </div>
+
+      <!-- ===== OPTIONAL META PILLS (EDIT / REMOVE AS NEEDED) ===== -->
+      <div class="meta">
+        <span class="pill">
+          <strong>Grade Band:</strong>
+          K–2
+        </span>
+        <span class="pill">
+          <strong>Unit Type:</strong>
+          Placeholder
+        </span>
+        <span class="pill">
+          <strong>Standards:</strong>
+          1-X
+        </span>
+        <!-- Add/remove pills as needed -->
+      </div>
+
+      <!-- ===== ACCORDION SECTIONS (DUPLICATE AS NEEDED) ===== -->
+      <div class="accordion">
+        <!-- SECTION 1 -->
+        <div class="accordion-item">
+          <button class="accordion-button" data-target="section-1" aria-expanded="false" type="button">
+            <span>
+              <!-- SECTION TITLE -->
+              Statement of Purpose
+            </span>
+            <span class="chev">›</span>
+          </button>
+          <div id="section-1" class="accordion-panel collapse">
+            <p>
+              The purpose of this unit is to develop locomotor and non-locomotor skills in grades K-2 that provide the foundation for units in manipulative skills; rhythms and dance; etc. The unit is
+              composed of three Content Sets (6-7 lessons each) and the content of Content Set II &amp; III reinforces and extends the skills, use of skills, and movement concepts that were taught in
+              the previous Content Set/Sets of the Locomotor/Non-Locomotor unit.
+            </p>
+          </div>
+        </div>
+
+        <!-- SECTION 2 -->
+        <div class="accordion-item">
+          <button class="accordion-button" data-target="section-2" aria-expanded="false" type="button">
+            <span>
+              <!-- SECTION TITLE -->
+              Brief Description of Unit
+            </span>
+            <span class="chev">›</span>
+          </button>
+          <div id="section-2" class="accordion-panel collapse">
+            <p>
+              This unit is composed of three progressive Content Sets of Locomotor and Non-locomotor skills which are also aligned with appropriate movement concepts. Each level is aligned with the
+              2024 National PE standards and appropriate for grades K-2. Summative and diagnostic (formative) assessments will be provided for each identified Unit Goal. The content of each Content
+              Set is described below:
+            </p>
+            <ul>
+              <li>
+                <strong>Content Set I:</strong>
+                is designed to introduce/explore the locomotor skills of Jumping, Galloping, Sliding, Running, Hopping, and Skipping and the non-locomotor skills of Bending, Stretching, Swinging,
+                Swaying, Stretching, and Bending. Students will also be introduced to the following Movement Concepts that are integrated into the use and development of the locomotor and
+                non-locomotor skills: Space (Personal and General Space, Levels, Pathways, Directions); Effort (speed); Relationships (to other body parts and to others), and the identification of
+                major body parts. Students will participate in introductory practice tasks and developmental games appropriate to unit level, skills, and concepts. Each lesson will provide students
+                with opportunities for success through differentiated learning tasks. All unit goals/lesson outcomes are aligned with K-2 Grade Span Outcomes (National PE Standards – SHAPE America,
+                2024) and can be implemented in any grade K-2.
+              </li>
+              <li>
+                <strong>Content Set II:</strong>
+                is designed for students in grades K-2 who have the necessary pre-requisite skills to be successful in this unit. This unit is comprised of six lessons that further develop and refine
+                the locomotor skills of Jumping, Galloping, Sliding, Running, Hopping, and Skipping and the non-locomotor skills of Bending, Stretching, Swinging, and Swaying. Students will also
+                further refine and develop the following Movement Concepts that are integrated into the use and development of the previous and additional locomotor and non-locomotor skills: Space
+                (Personal and General Space, Levels, Pathways, Directions); Effort (speed); Relationships (to other body parts and to others), and the identification of major body parts, all of which
+                were introduced in Level I. In addition, the unit introduces the locomotor skill of leaping, the non-locomotor skills of twisting and turning, and the aspect of over and under which is
+                included in the Movement Concept of Relationships. Students will have opportunity to practice, refine, and apply locomotor and non-locomotor skills and movement concepts that were
+                previously introduced through practice tasks and developmentally appropriate games and activities. Each lesson will provide students with opportunities for success through
+                differentiated learning tasks. All unit goals/lesson outcomes are aligned with K-2 Grade Span Outcomes (National PE Standards – SHAPE America, 2024) and can be implemented in any grade
+                K-2, if the students are competent in the identified prerequisite skills and concepts.
+              </li>
+              <li>
+                <strong>Content Set III:</strong>
+                further refines the skills introduced/refined in Content Set I and II and extends the Movement Concept of Relationships as students refine their ability to move over and under and be
+                introduced to around and through other people and objects using locomotor skills taught in Level I and Level II. Each lesson will provide students with opportunities for success
+                through differentiated learning tasks and developmentally appropriate games and activities. All unit goals/lesson outcomes are aligned with K-2 Grade Span Outcomes (National PE
+                Standards – SHAPE America, 2024) and can be implemented in any grade K-2, if the students are competent in the identified prerequisite skills and concepts.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- SECTION 3 -->
+        <div class="accordion-item">
+          <button class="accordion-button" data-target="section-3" aria-expanded="false" type="button">
+            <span>
+              <!-- SECTION TITLE -->
+              Rationale for Unit
+            </span>
+            <span class="chev">›</span>
+          </button>
+          <div id="section-3" class="accordion-panel collapse">
+            <ul>
+              <li>
+                <strong>Developmental Appropriateness:</strong>
+                By grade 2 students are ready to achieve the mature level of all skills included in this unit, except for the leap, which is introduced in Content Set II and refined in Content Set
+                III. Students are not expected to demonstrate a mature leap until grade 3 Donnelly, Mueller, &amp; Gallahue (2017); Couturier, Chepko, &amp; Holt/Hale (2014). This unit is
+                developmentally appropriate and aligned with the National Standards for grades K-2 and provides a strong foundation for skills, movement concepts, and activities that will be taught in
+                grades 3-5.
+              </li>
+              <li>
+                <strong>Foundational Importance:</strong>
+                The skills and concepts developed in the three content sets of this Locomotor/Non-locomotor unit provide foundational skills and movement concepts that will be applied in other K-2
+                units such as developmental gymnastics, manipulatives, and rhythms and dance. It will also provide the foundation for all 3-5 units as locomotor and non-locomotor skills and movement
+                concepts are an integral component of all movement activities..
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- SECTION 4 (DOWNLOAD EXAMPLE) -->
+        <div class="accordion-item">
+          <button class="accordion-button" data-target="section-4" aria-expanded="false" type="button">
+            <span>
+              <!-- SECTION TITLE -->
+              Resources / Downloads
+            </span>
+            <span class="chev">›</span>
+          </button>
+          <div id="section-4" class="accordion-panel collapse">
+            <p>Click the button below to view grading resources:</p>
+            <a class="download-btn" href="docs/GRADING RESOURCES.pdf" target="_blank" rel="noopener">Download / Open PDF</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Accordion behavior (single or multiple open supported; current = multiple open)
+      document.querySelectorAll(".accordion-button").forEach((button) => {
+        button.addEventListener("click", () => {
+          const panel = document.getElementById(button.dataset.target);
+          const isOpen = panel.classList.contains("show");
+          button.setAttribute("aria-expanded", String(!isOpen));
+          panel.classList.toggle("show");
+        });
+      });
+    </script>
+  </body>
+</html>
