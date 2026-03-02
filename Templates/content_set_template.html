@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><!-- PAGE TITLE -->Content Set | PE for Life</title>
+
+    <style>
+      :root {
+        --surface: #f4f1de;
+        --card: #ffffff;
+        --heading: #1f2f30;
+        --text: #2f3e3f;
+        --muted: rgba(31, 47, 48, 0.75);
+        --accent: #e07a5f;
+        --border: rgba(31, 47, 48, 0.14);
+        --radius: 14px;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--font);
+        background: var(--surface);
+        color: var(--text);
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 48px 40px;
+      }
+
+      h1 {
+        margin: 0 0 10px;
+        font-size: 36px;
+        color: var(--heading);
+      }
+
+      .subtitle {
+        font-size: 16px;
+        margin: 0 0 28px;
+        opacity: 0.85;
+      }
+
+      /* ===== Accordion ===== */
+      .accordion-item {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        margin-bottom: 18px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .accordion-button {
+        width: 100%;
+        background: var(--card);
+        border: 0;
+        padding: 18px 22px;
+        text-align: left;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        color: var(--heading);
+      }
+
+      .accordion-button:hover {
+        background: rgba(224, 122, 95, 0.08);
+      }
+
+      .chev {
+        transition: transform 0.25s ease;
+        font-size: 18px;
+        color: var(--muted);
+        margin-left: 12px;
+      }
+
+      .accordion-button[aria-expanded="true"] .chev {
+        transform: rotate(90deg);
+        color: var(--heading);
+      }
+
+      .accordion-panel {
+        padding: 0 22px 22px 22px;
+        border-top: 1px solid var(--border);
+        line-height: 1.65;
+        font-size: 16px;
+        color: var(--text);
+      }
+
+      .accordion-panel p {
+        margin: 12px 0 0;
+      }
+      .accordion-panel ul {
+        margin: 14px 0 0 20px;
+      }
+      .accordion-panel li {
+        margin-bottom: 12px;
+      }
+      .accordion-panel ol {
+        margin: 12px 0 0 22px;
+      }
+
+      .collapse {
+        display: none;
+      }
+      .collapse.show {
+        display: block;
+      }
+
+      /* Buttons / links */
+      .btn-link,
+      .pdf-link {
+        display: inline-block;
+        margin-top: 14px;
+        padding: 12px 18px;
+        background: var(--accent);
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 600;
+        border: 0;
+      }
+      .btn-link:hover,
+      .pdf-link:hover {
+        opacity: 0.9;
+      }
+
+      /* ===== Tabs (Lesson Plan) ===== */
+      .lesson-tabs {
+        margin-top: 12px;
+      }
+
+      .lesson-tabs .tab-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 12px 0 14px 0;
+      }
+
+      .lesson-tabs .tab-btn {
+        appearance: none;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.65);
+        color: var(--heading);
+        padding: 10px 12px;
+        border-radius: 999px;
+        font-weight: 700;
+        cursor: pointer;
+        line-height: 1;
+        transition:
+          background 0.15s ease,
+          transform 0.15s ease,
+          border-color 0.15s ease,
+          color 0.15s ease;
+      }
+
+      .lesson-tabs .tab-btn:hover {
+        background: #ffffff;
+        transform: translateY(-1px);
+        border-color: rgba(31, 47, 48, 0.22);
+      }
+
+      .lesson-tabs .tab-btn:focus {
+        outline: 2px solid rgba(224, 122, 95, 0.75);
+        outline-offset: 2px;
+      }
+
+      .lesson-tabs .tab-btn[aria-selected="true"] {
+        background: var(--accent);
+        color: #ffffff;
+        border-color: var(--accent);
+      }
+
+      .lesson-tabs .tab-panel {
+        display: none;
+        background: #ffffff;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 16px 18px 18px 18px;
+        box-shadow: var(--shadow);
+      }
+
+      .lesson-tabs .tab-panel.active {
+        display: block;
+      }
+
+      .lesson-tabs .tab-panel h3 {
+        margin: 0 0 10px 0;
+        font-size: 18px;
+        color: var(--heading);
+      }
+
+      /* Tables */
+      .table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin-top: 12px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 720px;
+        background: #ffffff;
+      }
+
+      th,
+      td {
+        border: 1px solid rgba(31, 47, 48, 0.18);
+        padding: 10px;
+        vertical-align: top;
+        color: var(--text);
+        font-size: 15px;
+        line-height: 1.55;
+      }
+
+      thead th {
+        background: rgba(31, 47, 48, 0.06);
+        color: var(--heading);
+        text-align: left;
+      }
+
+      caption {
+        text-align: left;
+        padding: 0 0 10px 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      /* Optional callout (useful for notes) */
+      .callout {
+        margin-top: 14px;
+        padding: 14px 16px;
+        background: rgba(224, 122, 95, 0.1);
+        border-left: 4px solid var(--accent);
+        border-radius: 10px;
+      }
+
+      @media (max-width: 900px) {
+        .container {
+          padding: 36px 24px;
+        }
+        h1 {
+          font-size: 30px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- ===== EDIT PAGE TITLE + SUBTITLE ===== -->
+      <h1>
+        <!-- UNIT NAME + CONTENT SET -->
+        Unit Name: Content Set I
+      </h1>
+      <div class="subtitle">
+        <!-- Short instructions for users -->
+        Use the sections below to access unit components, lesson plan details, and downloadable resources.
+      </div>
+
+      <!-- ===== MAIN ACCORDION ===== -->
+      <div class="accordion" id="mainAccordion">
+        <!-- SECTION: Essential Questions -->
+        <div class="accordion-item">
+          <button class="accordion-button" type="button" id="acc-btn-eq" aria-expanded="false" data-accordion-target="acc-panel-eq">
+            <span>Essential Questions</span>
+            <span class="chev">›</span>
+          </button>
+          <div class="accordion-panel collapse" id="acc-panel-eq" role="region" aria-labelledby="acc-btn-eq">
+            <ul>
+              <li>EQ1: Replace text</li>
+              <li>EQ2: Replace text</li>
+              <li>EQ3: Replace text</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- SECTION: Skills -->
+        <div class="accordion-item">
+          <button class="accordion-button" type="button" id="acc-btn-skills" aria-expanded="false" data-accordion-target="acc-panel-skills">
+            <span>Skills</span>
+            <span class="chev">›</span>
+          </button>
+          <div class="accordion-panel collapse" id="acc-panel-skills" role="region" aria-labelledby="acc-btn-skills">
+            <p><strong>Prerequisite skills/movement concepts necessary for success:</strong></p>
+            <ul>
+              <li>
+                <strong>Concepts:</strong>
+                Replace
+              </li>
+              <li>
+                <strong>Skills:</strong>
+                Replace
+              </li>
+            </ul>
+
+            <p><strong>Skills introduced/refined in unit:</strong></p>
+            <ol>
+              <li>Replace</li>
+              <li>Replace</li>
+            </ol>
+
+            <!-- Optional callout -->
+            <div class="callout">
+              <strong>Note:</strong>
+              Add any teacher notes here (optional).
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION: Movement Concepts -->
+        <div class="accordion-item">
+          <button class="accordion-button" type="button" id="acc-btn-concepts" aria-expanded="false" data-accordion-target="acc-panel-concepts">
+            <span>Movement Concepts</span>
+            <span class="chev">›</span>
+          </button>
+          <div class="accordion-panel collapse" id="acc-panel-concepts" role="region" aria-labelledby="acc-btn-concepts">
+            <p><strong>Unit Movement Concept Focus:</strong></p>
+            <ul>
+              <li>Space: Replace</li>
+              <li>Effort: Replace</li>
+              <li>Relationships: Replace</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- SECTION: Standards & Learning Outcomes (Table) -->
+        <div class="accordion-item">
+          <button class="accordion-button" type="button" id="acc-btn-standards" aria-expanded="false" data-accordion-target="acc-panel-standards">
+            <span>Standards &amp; Learning Outcomes</span>
+            <span class="chev">›</span>
+          </button>
+          <div class="accordion-panel collapse" id="acc-panel-standards" role="region" aria-labelledby="acc-btn-standards">
+            <div class="table-wrap">
+              <table role="table" aria-label="Standards and learning outcomes table">
+                <caption>Update rows as needed</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">National Standard</th>
+                    <th scope="col">Grade Span Learning Indicator</th>
+                    <th scope="col">Unit Goals</th>
+                    <th scope="col">Assessment</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>1.2.1</td>
+                    <td>Replace goal text</td>
+                    <td>Replace assessment text</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION: Resources & Materials Needed -->
+        <div class="accordion-item">
+          <button class="accordion-button" type="button" id="acc-btn-resources" aria-expanded="false" data-accordion-target="acc-panel-resources">
+            <span>Resources &amp; Materials Needed</span>
+            <span class="chev">›</span>
+          </button>
+          <div class="accordion-panel collapse" id="acc-panel-resources" role="region" aria-labelledby="acc-btn-resources">
+            <p><strong>Equipment:</strong></p>
+            <ul>
+              <li>Replace</li>
+              <li>Replace</li>
+            </ul>
+
+            <p><strong>Teaching Materials/Resources:</strong></p>
+            <ul>
+              <li>Replace</li>
+            </ul>
+
+            <p>
+              <strong>Facilities/Space:</strong>
+              Replace
+            </p>
+            <p>
+              <strong>Time:</strong>
+              Replace
+            </p>
+
+            <p><strong>Teacher Expertise/Training/Certification:</strong></p>
+            <ul>
+              <li>Replace</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- SECTION: Block Plan (PDF) -->
+        <div class="accordion-item">
+          <button class="accordion-button" type="button" id="acc-btn-blockplan" aria-expanded="false" data-accordion-target="acc-panel-blockplan">
+            <span>Block Plan</span>
+            <span class="chev">›</span>
+          </button>
+          <div class="accordion-panel collapse" id="acc-panel-blockplan" role="region" aria-labelledby="acc-btn-blockplan">
+            <p>Click the button below to view the suggested teaching sequence (Block Plan):</p>
+            <a class="pdf-link" href="docs/REPLACE_BLOCK_PLAN.pdf" target="_blank" rel="noopener">Open PDF</a>
+          </div>
+        </div>
+
+        <!-- SECTION: Lesson Plan (Tabs) -->
+        <div class="accordion-item">
+          <button class="accordion-button" type="button" id="acc-btn-lessonplan" aria-expanded="false" data-accordion-target="acc-panel-lessonplan">
+            <span>Lesson Plan</span>
+            <span class="chev">›</span>
+          </button>
+
+          <div class="accordion-panel collapse" id="acc-panel-lessonplan" role="region" aria-labelledby="acc-btn-lessonplan">
+            <div class="lesson-tabs" data-tabs="lesson-days">
+              <p>Select a day to view the detailed lesson plan.</p>
+
+              <div class="tab-buttons" role="tablist" aria-label="Lesson plan days">
+                <button class="tab-btn" role="tab" id="tab-day1" aria-controls="panel-day1" aria-selected="true" tabindex="0" data-tab="panel-day1">Day 1</button>
+                <button class="tab-btn" role="tab" id="tab-day2" aria-controls="panel-day2" aria-selected="false" tabindex="-1" data-tab="panel-day2">Day 2</button>
+                <button class="tab-btn" role="tab" id="tab-day3" aria-controls="panel-day3" aria-selected="false" tabindex="-1" data-tab="panel-day3">Day 3</button>
+                <button class="tab-btn" role="tab" id="tab-day4" aria-controls="panel-day4" aria-selected="false" tabindex="-1" data-tab="panel-day4">Day 4</button>
+                <button class="tab-btn" role="tab" id="tab-day5" aria-controls="panel-day5" aria-selected="false" tabindex="-1" data-tab="panel-day5">Day 5</button>
+                <button class="tab-btn" role="tab" id="tab-day6" aria-controls="panel-day6" aria-selected="false" tabindex="-1" data-tab="panel-day6">Day 6</button>
+                <button class="tab-btn" role="tab" id="tab-day7" aria-controls="panel-day7" aria-selected="false" tabindex="-1" data-tab="panel-day7">Day 7</button>
+              </div>
+
+              <!-- ===== COPY/PASTE A PANEL PER DAY ===== -->
+              <section class="tab-panel active" role="tabpanel" id="panel-day1" aria-labelledby="tab-day1">
+                <h3>Day 1</h3>
+
+                <p><strong>Lesson Outcomes/Objectives</strong></p>
+                <ol>
+                  <li>Replace objective</li>
+                  <li>Replace objective</li>
+                </ol>
+
+                <p><strong>Equipment</strong></p>
+                <ul>
+                  <li>Replace equipment</li>
+                </ul>
+
+                <p><strong>Teaching Resources</strong></p>
+                <ul>
+                  <li>Replace resource</li>
+                </ul>
+
+                <p><strong>Lesson Activities</strong></p>
+                <div class="table-wrap" role="region" aria-label="Day 1 lesson activities table">
+                  <table role="table">
+                    <caption>Update activities as needed</caption>
+                    <thead>
+                      <tr>
+                        <th scope="col">Time</th>
+                        <th scope="col">Activity</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Diagram</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>5 min</td>
+                        <td>Replace activity</td>
+                        <td>Replace description</td>
+                        <td><a class="pdf-link" href="docs/REPLACE_DIAGRAM.pdf" target="_blank" rel="noopener">Open Diagram</a></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+
+              <section class="tab-panel" role="tabpanel" id="panel-day2" aria-labelledby="tab-day2"><h3>Day 2</h3></section>
+              <section class="tab-panel" role="tabpanel" id="panel-day3" aria-labelledby="tab-day3"><h3>Day 3</h3></section>
+              <section class="tab-panel" role="tabpanel" id="panel-day4" aria-labelledby="tab-day4"><h3>Day 4</h3></section>
+              <section class="tab-panel" role="tabpanel" id="panel-day5" aria-labelledby="tab-day5"><h3>Day 5</h3></section>
+              <section class="tab-panel" role="tabpanel" id="panel-day6" aria-labelledby="tab-day6"><h3>Day 6</h3></section>
+              <section class="tab-panel" role="tabpanel" id="panel-day7" aria-labelledby="tab-day7"><h3>Day 7</h3></section>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION: Assessments & Grading Criteria (PDF) -->
+        <div class="accordion-item">
+          <button class="accordion-button" type="button" id="acc-btn-assess" aria-expanded="false" data-accordion-target="acc-panel-assess">
+            <span>Assessments &amp; Grading Criteria</span>
+            <span class="chev">›</span>
+          </button>
+          <div class="accordion-panel collapse" id="acc-panel-assess" role="region" aria-labelledby="acc-btn-assess">
+            <p>Click the button below to view assessment guidelines:</p>
+            <a class="pdf-link" href="docs/REPLACE_ASSESSMENT.pdf" target="_blank" rel="noopener">Open PDF</a>
+          </div>
+        </div>
+
+        <!-- SECTION: Teacher Resources & At Home Activities (PDF) -->
+        <div class="accordion-item">
+          <button class="accordion-button" type="button" id="acc-btn-teacher" aria-expanded="false" data-accordion-target="acc-panel-teacher">
+            <span>Teacher Resources &amp; At Home Activities</span>
+            <span class="chev">›</span>
+          </button>
+          <div class="accordion-panel collapse" id="acc-panel-teacher" role="region" aria-labelledby="acc-btn-teacher">
+            <p>Click the button below to view additional teacher resources and suggested at home activities:</p>
+            <a class="pdf-link" href="docs/REPLACE_TEACHER_RESOURCES.pdf" target="_blank" rel="noopener">Open PDF</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Accordions (multiple open supported)
+      document.querySelectorAll("[data-accordion-target]").forEach((btn) => {
+        const panelId = btn.getAttribute("data-accordion-target");
+        const panel = document.getElementById(panelId);
+        if (!panel) return;
+
+        btn.addEventListener("click", () => {
+          const isOpen = panel.classList.contains("show");
+          btn.setAttribute("aria-expanded", String(!isOpen));
+          panel.classList.toggle("show", !isOpen);
+        });
+      });
+
+      // Tabs (lesson plan)
+      (function () {
+        function initTabs(tabsRoot) {
+          const buttons = Array.from(tabsRoot.querySelectorAll('[role="tab"]'));
+          const panels = Array.from(tabsRoot.querySelectorAll('[role="tabpanel"]'));
+          const storageKey = tabsRoot.getAttribute("data-tabs") ? "tabs:" + tabsRoot.getAttribute("data-tabs") : null;
+
+          function activateTab(btn, setFocus = true, persist = true) {
+            const targetId = btn.getAttribute("data-tab");
+            const targetPanel = tabsRoot.querySelector("#" + CSS.escape(targetId));
+            if (!targetPanel) return;
+
+            buttons.forEach((b) => {
+              const isActive = b === btn;
+              b.setAttribute("aria-selected", isActive ? "true" : "false");
+              b.tabIndex = isActive ? 0 : -1;
+            });
+
+            panels.forEach((p) => p.classList.remove("active"));
+            targetPanel.classList.add("active");
+
+            if (setFocus) btn.focus();
+            if (storageKey && persist) localStorage.setItem(storageKey, targetId);
+          }
+
+          buttons.forEach((btn) => {
+            btn.addEventListener("click", () => activateTab(btn, false, true));
+
+            btn.addEventListener("keydown", (e) => {
+              const idx = buttons.indexOf(btn);
+              let nextIdx = null;
+
+              if (e.key === "ArrowRight") nextIdx = (idx + 1) % buttons.length;
+              if (e.key === "ArrowLeft") nextIdx = (idx - 1 + buttons.length) % buttons.length;
+              if (e.key === "Home") nextIdx = 0;
+              if (e.key === "End") nextIdx = buttons.length - 1;
+
+              if (nextIdx !== null) {
+                e.preventDefault();
+                activateTab(buttons[nextIdx], true, true);
+              }
+            });
+          });
+
+          if (storageKey) {
+            const saved = localStorage.getItem(storageKey);
+            const savedBtn = saved ? buttons.find((b) => b.getAttribute("data-tab") === saved) : null;
+            if (savedBtn) activateTab(savedBtn, false, false);
+            else activateTab(buttons[0], false, false);
+          } else {
+            const selected = buttons.find((b) => b.getAttribute("aria-selected") === "true") || buttons[0];
+            activateTab(selected, false, false);
+          }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+          document.querySelectorAll(".lesson-tabs").forEach(initTabs);
+        });
+      })();
+    </script>
+  </body>
+</html>
